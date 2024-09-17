@@ -122,7 +122,6 @@ class ConnectivityWrapper {
   Future<bool> get isConnected async {
     bool connected = await _checkWebConnection();
     if (kIsWeb) return connected;
-    if (!connected) return connected;
 
     List<Future<AddressCheckResult>> requests = [];
 
@@ -131,7 +130,17 @@ class ConnectivityWrapper {
     }
     _lastTryResults = List.unmodifiable(await Future.wait(requests));
 
-    return _lastTryResults.map((result) => result.isSuccess).contains(true);
+    bool result =
+    _lastTryResults.map((result) => result.isSuccess).contains(true);
+
+    if (!result) {
+      try {
+        final google = await InternetAddress.lookup('google.com');
+        result = google.isNotEmpty && google[0].rawAddress.isNotEmpty;
+      } catch (e) {}
+    }
+
+    return result;
   }
 
   Future<ConnectivityStatus> get connectionStatus async {
@@ -143,8 +152,7 @@ class ConnectivityWrapper {
   ///
   Future<bool> _checkWebConnection() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult != ConnectivityResult.none) {
       return true;
     }
     return false;
