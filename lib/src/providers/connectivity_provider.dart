@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 ///
 class ConnectivityProvider extends ChangeNotifier {
   StreamController<ConnectivityStatus> connectivityController =
-      StreamController<ConnectivityStatus>();
+      StreamController<ConnectivityStatus>.broadcast();
 
   Stream<ConnectivityStatus> get connectivityStream =>
       connectivityController.stream;
