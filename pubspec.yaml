@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^6.1.2
+  provider: ^6.0.5
   connectivity_plus: ^6.0.5 # To check connectivity for web only
 
 dev_dependencies:
