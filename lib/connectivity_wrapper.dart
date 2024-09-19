@@ -13,7 +13,6 @@ library connectivity_wrapper;
 import 'dart:async';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:connectivity_wrapper/src/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 
@@ -120,8 +119,6 @@ class ConnectivityWrapper {
   List<AddressCheckResult> _lastTryResults = <AddressCheckResult>[];
 
   Future<bool> get isConnected async {
-    bool connected = await _checkWebConnection();
-    if (kIsWeb) return connected;
 
     List<Future<AddressCheckResult>> requests = [];
 
@@ -147,15 +144,6 @@ class ConnectivityWrapper {
     return await isConnected
         ? ConnectivityStatus.CONNECTED
         : ConnectivityStatus.DISCONNECTED;
-  }
-
-  ///
-  Future<bool> _checkWebConnection() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult != ConnectivityResult.none) {
-      return true;
-    }
-    return false;
   }
 
   Duration checkInterval = DEFAULT_INTERVAL;
