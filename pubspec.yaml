@@ -14,9 +14,11 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^6.0.5
+  connectivity_plus: 5.0.1 # To check connectivity for web only
+  rxdart: 0.28.0
 
 dev_dependencies:
-  flutter_lints: ^4.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 
